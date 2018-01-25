@@ -1,0 +1,54 @@
+﻿@model CookieViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <h2>Order cookies from Lexi, the Cookie Girl!</h2>
+    <div>
+        Cookies are $4/box.  (Gluten-free Trios are $5/box)
+    </div>
+    @using (Html.BeginForm("Order", "Home", FormMethod.Post))
+    {
+
+        <div class="gridContainer">
+            @for (int cookieCount = 0; cookieCount < Model.Cookies.Count; cookieCount++)
+            {
+                <div>
+                    @Html.Label(Model.Cookies[cookieCount].Name)
+                    
+                    @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))
+
+                    <img src="@Model.Cookies[cookieCount].ImagePath" />
+                </div>
+
+            }
+            <p>
+                Want more info on the cookies or a better description?
+                <a class="btn btn-default" href="https://www.gsbadgerland.org/en/cookies/about-girl-scout-cookies/meet-the-cookies-abc.html">
+                    Learn More About the Cookies
+                </a>
+            </p>
+
+            <p>
+
+                <input type="submit" value="Order" />
+            </p>
+            <p>
+
+                <a href="mailto:lexithecookiegirl@gmail.com">Email Lexi</a> if you're having problems with the site.  Please include Name, Address and what cookies (including number of boxes) you'd like.
+            </p>
+
+
+        </div>
+
+    }
+
+</body>
+</html>
