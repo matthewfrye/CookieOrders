@@ -1,5 +1,3 @@
-using System;
-
 namespace CookieOrders.Models
 {
     public class ErrorViewModel
