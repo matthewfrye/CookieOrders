@@ -9,5 +9,6 @@ namespace CookieOrders.Data
         {
         }
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<Cookie> Cookie { get; set; }
     }
 }

@@ -24,7 +24,6 @@
                     @Html.Label(Model.Cookies[cookieCount].Name)<br />
 
                     @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))<br />
-
                     <img src="@Model.Cookies[cookieCount].ImagePath" />
                 </div>
 
