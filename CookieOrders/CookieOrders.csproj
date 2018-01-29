@@ -5,12 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\CookieContext.cs" />
+    <Compile Remove="Data\CookieDatabaseContext.cs" />
+    <Compile Remove="Migrations\CookieDatabaseContextModelSnapshot.cs" />
+    <Compile Remove="Migrations\Initial.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
