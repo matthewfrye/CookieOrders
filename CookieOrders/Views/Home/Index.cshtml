@@ -23,7 +23,7 @@
                 <div>
                     @Html.Label(Model.Cookies[cookieCount].Name)
                     
-                    @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))
+                    @Html.DropDownListFor(m => m.Cookies[cookieCount].Name, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))
 
                     <img src="@Model.Cookies[cookieCount].ImagePath" />
                 </div>
