@@ -20,11 +20,10 @@
         <div class="gridContainer">
             @for (int cookieCount = 0; cookieCount < Model.Cookies.Count; cookieCount++)
             {
-                <div>
-                    @Html.Label(Model.Cookies[cookieCount].Name)
-                    
-                    @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))
+                <div class="cookieItem">
+                    @Html.Label(Model.Cookies[cookieCount].Name)<br />
 
+                    @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))<br />
                     <img src="@Model.Cookies[cookieCount].ImagePath" />
                 </div>
 
