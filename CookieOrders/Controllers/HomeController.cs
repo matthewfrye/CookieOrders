@@ -17,13 +17,27 @@ namespace CookieOrders.Controllers
 
         public async Task<IActionResult> Index()
         {
-            CookieViewModel cookieVM = new CookieViewModel();
-            cookieVM.Cookies = await _context.Cookie.ToListAsync();
+            CookieViewModel cookieVM = new CookieViewModel(await _context.Cookie.ToListAsync());
+            //cookieVM.Cookies = await _context.Cookie.ToListAsync();
             return View(cookieVM);
         }
 
-        public IActionResult Order(CookieViewModel cookieOrder)
+        public IActionResult Order(CookieViewModel cookieVM)
         {
+            //Order order = new Order();
+            
+            foreach( CookieDTO cookie in cookieVM.Cookies)
+            {
+                if(cookie.Amount >0)
+                {
+                    CookieOrder cookieOrder = new CookieOrder();
+                    cookieOrder.Cookies.Add(cookie.ToCookie());
+                    cookieOrder.
+                }
+                //order.AmountDue += cookie.Am
+            }
+            
+
             CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel();
             for(int cookieCount = 0; cookieCount < cookieOrderVM.Cookies.Count; cookieCount++)
             {
