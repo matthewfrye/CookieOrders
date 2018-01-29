@@ -8,6 +8,6 @@ namespace CookieOrders.Data
         public CustomerContext(DbContextOptions<CustomerContext> options) : base(options)
         {
         }
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Customer> Customer { get; set; }
     }
 }
