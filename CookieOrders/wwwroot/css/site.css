@@ -32,11 +32,19 @@
 .gridContainer {
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
 }
 
 .cookieItem {
     text-align: center;
     margin: 10px 10px 10px 0;
-    justify-content: space-between;
     border: 1px dashed #00ae58;
+}
+
+.navbar-inverse {
+    background-color: #00ae58;
+}
+
+.navbar-inverse .navbar-brand {
+    color: black;
 }
