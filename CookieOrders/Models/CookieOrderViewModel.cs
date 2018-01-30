@@ -14,13 +14,13 @@ namespace CookieOrders.Models
 
         public int TotalDue { get {
                 int total = 0;
-                foreach(var cookie in Cookies)
-                {
-                    if (cookie.Type == CookieType.GlutenFreeTrios)
-                        total += cookie.Amount * 5;
-                    else
-                        total += cookie.Amount * 4;
-                }
+                //foreach(var cookie in Cookies)
+                //{
+                //    if (cookie.Type == CookieType.GlutenFreeTrios)
+                //        total += cookie.Amount * 5;
+                //    else
+                //        total += cookie.Amount * 4;
+                //}
                 return total;
             } }
 
@@ -31,7 +31,7 @@ namespace CookieOrders.Models
             Cookies = new List<Cookie>();
             foreach(CookieType type in Enum.GetValues(typeof(CookieType)))
             {
-                Cookies.Add(new Cookie { Type = type });
+                //Cookies.Add(new Cookie { Type = type });
 
             }
         }

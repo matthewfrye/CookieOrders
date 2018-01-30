@@ -13,48 +13,6 @@
 
         <div class="wrapper">
 
-            @*<div>
-                           @foreach (Cookie cookie in Model.Cookies)
-                       {
-                               <div class="one">
-                                   @Html.Label(cookie.Name)
-                               </div>
-                               <div class="two">
-                                   @Html.DropDownList(cookie.Type.ToString() + "Amount", new List<SelectListItem>
-                           {
-                               new SelectListItem { Text = "0", Value = "0" },
-                               new SelectListItem { Text = "1", Value = "1" },
-                               new SelectListItem { Text = "2", Value = "2" },
-                               new SelectListItem { Text = "3", Value = "3" },
-                               new SelectListItem { Text = "4", Value = "4" },
-                               new SelectListItem { Text = "5", Value = "5" },
-                               new SelectListItem { Text = "6", Value = "6" },
-                               new SelectListItem { Text = "7", Value = "7" },
-                               new SelectListItem { Text = "8", Value = "8" },
-                               new SelectListItem { Text = "9", Value = "9" },
-                })
-                               </div>
-
-                       }
-                           <p>
-                               Want more info on the cookies or a better description?
-                               <a class="btn btn-default" href="https://www.gsbadgerland.org/en/cookies/about-girl-scout-cookies/meet-the-cookies-abc.html">
-                                   Learn More About the Cookies
-                               </a>
-                           </p>
-
-                           <p>
-
-                               <input type="submit" value="Order" />
-                           </p>
-                           <p>
-
-                               <a href="mailto:lexithecookiegirl@gmail.com">Email Lexi</a> if you're having problems with the site.  Please include Name, Address and what cookies (including number of boxes) you'd like.
-                           </p>
-
-
-                       </div>*@
-
             <div>
                 @Html.Label("Name:")
                 @Html.TextBoxFor(m => m.Name)
@@ -72,13 +30,13 @@
             </div>
             @foreach (Cookie cookie in Model.Cookies)
             {
-                @if (cookie.Amount > 0)
-                {
+                @*@if (cookie.Amount > 0)
+                {*@
                     <div>
                         @Html.Label(cookie.Name + ":")
-                        @Html.Label(cookie.Amount.ToString())
+                        @*@Html.Label(cookie.Amount.ToString())*@
                     </div>
-                }
+                @*}*@
             }
 
             <div>

@@ -26,7 +26,6 @@
                     @Html.Label(Model.Cookies[cookieCount].Name) <a href="#" data-toggle="popover" data-trigger="focus" title="@Model.Cookies[cookieCount].Name" data-content="@Model.Cookies[cookieCount].Description">(info)</a><br />
 
                     @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))<br />
-
                     <img src="@Model.Cookies[cookieCount].ImagePath" />
                 </div>
 
