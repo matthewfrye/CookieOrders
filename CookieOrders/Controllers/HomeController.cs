@@ -29,6 +29,10 @@ namespace CookieOrders.Controllers
             _context.SaveChanges();
             List<Cookie> cookies = await _context.Cookie.ToListAsync();
 
+            CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel();
+            cookieOrderVM.Cookies = cookies;
+            cookieOrderVM.CookieOrders = new List<CookieOrder>();
+            cookieOrderVM.OrderId = order.OrderId;
             for (int cookieCount = 0; cookieCount < cookies.Count; cookieCount++)
             {
                 if(cookieVM.Cookies[cookieCount].Amount > 0)
@@ -39,6 +43,7 @@ namespace CookieOrders.Controllers
                     cookieOrder.CookieId = cookies[cookieCount].CookieId;
                     cookieOrder.NumberOfBoxes = cookieVM.Cookies[cookieCount].Amount;
                     _context.CookieOrder.Add(cookieOrder);
+                    cookieOrderVM.CookieOrders.Add(cookieOrder);
 
                     order.TotalAmountDue = order.TotalAmountDue + (cookieVM.Cookies[cookieCount].Amount * cookies[cookieCount].CostPerBox);
                 }
@@ -46,13 +51,22 @@ namespace CookieOrders.Controllers
             _context.Order.Update(order);
             _context.SaveChanges();
 
-            CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel();
+            cookieOrderVM.TotalDue = order.TotalAmountDue;
+            
             return View("CookieOrder", cookieOrderVM);
         }
     
-        public IActionResult CookieOrder(CookieOrderViewModel cookieOrder)
+        public IActionResult CookieOrder(CookieOrderViewModel cookieOrderVM)
         {
-            return View();
+            Customer customer = new Customer();
+            customer.Name = cookieOrderVM.Name;
+            customer.Address = cookieOrderVM.Address;
+            customer.City = cookieOrderVM.City;
+            customer.Email = cookieOrderVM.Email;
+            customer.OrderId = cookieOrderVM.OrderId;
+            _context.Customer.Add(customer);
+            _context.SaveChanges();
+            return View("ConfirmedOrder");
         }
 
         public IActionResult About()
