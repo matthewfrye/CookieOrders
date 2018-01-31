@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CookieOrders.Models
 {
@@ -10,6 +11,11 @@ namespace CookieOrders.Models
         //public string City { get; set; }
         //public string Email { get; set; }
         public Cookie Cookie { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CookieOrderId { get; set; }
+        public int CookieId { get; set; }
+        public int OrderId { get; set; }
         public int NumberOfBoxes { get; set; }
     }
 }

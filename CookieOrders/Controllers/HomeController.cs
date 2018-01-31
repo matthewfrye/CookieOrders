@@ -4,6 +4,7 @@ using CookieOrders.Models;
 using CookieOrders.Data;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace CookieOrders.Controllers
 {
@@ -18,31 +19,34 @@ namespace CookieOrders.Controllers
         public async Task<IActionResult> Index()
         {
             CookieViewModel cookieVM = new CookieViewModel(await _context.Cookie.ToListAsync());
-            //cookieVM.Cookies = await _context.Cookie.ToListAsync();
             return View(cookieVM);
         }
 
-        public IActionResult Order(CookieViewModel cookieVM)
+        public async Task<IActionResult> Order(CookieViewModel cookieVM)
         {
-            //Order order = new Order();
-            
-            foreach( CookieDTO cookie in cookieVM.Cookies)
+            Order order = new Order();
+            _context.Order.Add(order);
+            _context.SaveChanges();
+            List<Cookie> cookies = await _context.Cookie.ToListAsync();
+
+            for (int cookieCount = 0; cookieCount < cookies.Count; cookieCount++)
             {
-                if(cookie.Amount >0)
-                {
+                if(cookieVM.Cookies[cookieCount].Amount > 0)
+                { 
                     CookieOrder cookieOrder = new CookieOrder();
-                    cookieOrder.Cookies.Add(cookie.ToCookie());
-                    cookieOrder.
+                    cookieOrder.Cookie = cookies[cookieCount];
+                    cookieOrder.OrderId = order.OrderId;
+                    cookieOrder.CookieId = cookies[cookieCount].CookieId;
+                    cookieOrder.NumberOfBoxes = cookieVM.Cookies[cookieCount].Amount;
+                    _context.CookieOrder.Add(cookieOrder);
+
+                    order.TotalAmountDue = order.TotalAmountDue + (cookieVM.Cookies[cookieCount].Amount * cookies[cookieCount].CostPerBox);
                 }
-                //order.AmountDue += cookie.Am
             }
-            
+            _context.Order.Update(order);
+            _context.SaveChanges();
 
             CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel();
-            for(int cookieCount = 0; cookieCount < cookieOrderVM.Cookies.Count; cookieCount++)
-            {
-                //cookieOrderVM.Cookies[cookieCount].Amount = cookieOrder.Cookies[cookieCount].Amount;
-            }
             return View("CookieOrder", cookieOrderVM);
         }
     

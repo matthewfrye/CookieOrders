@@ -10,5 +10,7 @@ namespace CookieOrders.Data
         }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Cookie> Cookie { get; set; }
+        public DbSet<CookieOrder> CookieOrder { get; set; }
+        public DbSet<Order> Order { get; set; }
     }
 }

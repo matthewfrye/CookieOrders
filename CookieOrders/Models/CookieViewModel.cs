@@ -7,6 +7,10 @@ namespace CookieOrders.Models
     {
         public List<CookieDTO> Cookies { get; set; }
 
+        public CookieViewModel()
+        {
+
+        }
         public CookieViewModel(List<Cookie> cookieList)
         {
             Cookies = new List<CookieDTO>();
