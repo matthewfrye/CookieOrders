@@ -1,13 +1,16 @@
 ﻿@model CookieOrderViewModel
 
 @{
-    ViewData["Title"] = "Order Cookies from Lexi";
+    ViewData["Title"] = "CookieOrder";
 }
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
 </head>
 <body>
+    <h2>Your Order</h2>
+
+
     @using (Html.BeginForm("CookieOrder", "Home", FormMethod.Post))
     {
 
@@ -17,26 +20,35 @@
                 @Html.Label("Name:")
                 @Html.TextBoxFor(m => m.Name)
             </div>
-            <p/>
+            <p />
             <p />
             <div>
                 @Html.Label("Address:")
-                @Html.TextBoxFor(m => m.AddressLine1)
+                @Html.TextBoxFor(m => m.Address)
+            </div>
+            <p />
+            <p />
+            <div>
+                @Html.Label("City:")
+                @Html.TextBoxFor(m => m.City)
+            </div>
+            <p />
+            <p />
+            <div>
+                @Html.Label("Email Address:")
+                @Html.TextBoxFor(m => m.Email)
             </div>
             <p />
 
             <div>
                 @Html.Label("Boxes ordered:")
             </div>
-            @foreach (Cookie cookie in Model.Cookies)
+            @foreach (CookieOrder cookieOrder in Model.CookieOrders)
             {
-                @*@if (cookie.Amount > 0)
-                {*@
-                    <div>
-                        @Html.Label(cookie.Name + ":")
-                        @*@Html.Label(cookie.Amount.ToString())*@
-                    </div>
-                @*}*@
+                <div>
+                    @Html.Label(Model.Cookies[cookieOrder.CookieId - 1].Name + ":")
+                    @Html.Label(cookieOrder.NumberOfBoxes.ToString())
+                </div>
             }
 
             <div>
@@ -47,7 +59,7 @@
         </div>
 
         <p>
-
+            @Html.HiddenFor(m => m.OrderId)
             <input type="submit" value="Confirm Order" />
         </p>
     }
