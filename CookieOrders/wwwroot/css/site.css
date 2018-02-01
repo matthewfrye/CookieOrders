@@ -36,6 +36,10 @@
     justify-content: space-between;
 }
 
+.btn-primary {
+    margin: 15px 15px;
+}
+
 .cookieItem {
     text-align: center;
     margin: 10px 10px 10px 0;
