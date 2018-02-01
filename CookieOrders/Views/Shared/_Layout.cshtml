@@ -27,12 +27,17 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Order Cookies from Lexi</a>
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Problems with site?</a></li>
                 </ul>
+                <button type="submit" class="btn btn-primary pull-right" formaction="@Url.Action("Order", "Home")">Check Out</button>
+
+
+
             </div>
         </div>
     </nav>
