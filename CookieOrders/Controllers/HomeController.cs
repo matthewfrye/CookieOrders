@@ -37,6 +37,7 @@ namespace CookieOrders.Controllers
             {
                 if (cookieVM.Cookies[cookieCount].Amount > 0)
                 {
+
                     CookieOrder cookieOrder = new CookieOrder();
                     cookieOrder.Cookie = cookies[cookieCount];
                     cookieOrder.OrderId = order.OrderId;
@@ -52,10 +53,10 @@ namespace CookieOrders.Controllers
             _context.SaveChanges();
 
             cookieOrderVM.TotalDue = order.TotalAmountDue;
-
+            
             return View("CookieOrder", cookieOrderVM);
         }
-
+    
         public IActionResult CookieOrder(CookieOrderViewModel cookieOrderVM)
         {
             Customer customer = new Customer();
