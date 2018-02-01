@@ -10,9 +10,11 @@
 </head>
 <body>
 
-    <h2>Order cookies from Lexi, the Cookie Girl!</h2>
     <div>
-        Cookies are $4/box.  (Gluten-free Trios are $5/box)
+        <p>Cookies are <b>$4/box</b> and gluten-free Trios are <b>$5/box</b>.</p>
+        <p>
+            Having problems with the site? <a href="mailto:lexithecookiegirl@gmail.com?subject=Girl Scout Cookies Order">E-mail Lexi</a> and include your name, address, and the number of boxes (and what kind) you'd like.
+        </p>
     </div>
     @using (Html.BeginForm("Order", "Home", FormMethod.Post))
     {
@@ -21,33 +23,37 @@
             @for (int cookieCount = 0; cookieCount < Model.Cookies.Count; cookieCount++)
             {
                 <div class="cookieItem">
-                    @Html.Label(Model.Cookies[cookieCount].Name)<br />
+                    @Html.Label(Model.Cookies[cookieCount].Name) <a href="#" data-toggle="popover" data-trigger="focus" title="@Model.Cookies[cookieCount].Name" data-content="@Model.Cookies[cookieCount].Description">(info)</a><br />
 
                     @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))<br />
                     <img src="@Model.Cookies[cookieCount].ImagePath" />
                 </div>
 
             }
-            <p>
-                Want more info on the cookies or a better description?
-                <a class="btn btn-default" href="https://www.gsbadgerland.org/en/cookies/about-girl-scout-cookies/meet-the-cookies-abc.html">
-                    Learn More About the Cookies
-                </a>
-            </p>
+            <br />
 
-            <p>
-
-                <input type="submit" value="Order" />
-            </p>
+                <p>
+                    <input type="submit" value="Order" />
+                    @*<button type="button" class="btn btn-success">Next ></button>*@
+                </p>
             <p>
 
-                <a href="mailto:lexithecookiegirl@gmail.com">Email Lexi</a> if you're having problems with the site.  Please include Name, Address and what cookies (including number of boxes) you'd like.
             </p>
 
 
         </div>
 
     }
+
+    <script
+    src="http://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 
 </body>
 </html>

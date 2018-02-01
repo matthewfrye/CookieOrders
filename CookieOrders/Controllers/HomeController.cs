@@ -35,8 +35,9 @@ namespace CookieOrders.Controllers
             cookieOrderVM.OrderId = order.OrderId;
             for (int cookieCount = 0; cookieCount < cookies.Count; cookieCount++)
             {
-                if(cookieVM.Cookies[cookieCount].Amount > 0)
-                { 
+                if (cookieVM.Cookies[cookieCount].Amount > 0)
+                {
+
                     CookieOrder cookieOrder = new CookieOrder();
                     cookieOrder.Cookie = cookies[cookieCount];
                     cookieOrder.OrderId = order.OrderId;

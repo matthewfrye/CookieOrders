@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CookieOrders.Models
 {
@@ -21,7 +20,8 @@ namespace CookieOrders.Models
                     CookieId = cookie.CookieId,
                     CookieType = cookie.CookieType,
                     ImagePath = cookie.ImagePath,
-                    Name = cookie.Name
+                    Name = cookie.Name,
+                    Description = cookie.Description
                 });
             }
         }
