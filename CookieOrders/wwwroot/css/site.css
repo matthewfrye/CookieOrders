@@ -6,6 +6,7 @@
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
+    padding-top: 50px;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -32,17 +33,19 @@
 .gridContainer {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .cookieItem {
     text-align: center;
     margin: 10px 10px 10px 0;
-    border: 1px dashed #00ae58;
+    border: 1px dotted #00ae58;
+    background: linear-gradient(to bottom right, #b5e2cc, #00ae58);
 }
 
 .navbar-inverse {
-    background-color: #00ae58;
+    background: linear-gradient(to bottom right, #b5e2cc, #00ae58);
+    border: none;
 }
 
 .navbar-inverse .navbar-brand {
@@ -51,4 +54,8 @@
 
 .navbar-inverse .navbar-nav > li > a {
     color: black;
+}
+
+.cookieTitle {
+    font-size: 18px;
 }
