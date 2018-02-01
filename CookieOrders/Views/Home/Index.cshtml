@@ -1,21 +1,13 @@
 ﻿@model CookieViewModel
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
 </head>
 <body>
-
-    <div>
-        <p>Cookies are <b>$4/box</b> and gluten-free Trios are <b>$5/box</b>.</p>
-        <p>
-            Having problems with the site? <a href="mailto:lexithecookiegirl@gmail.com?subject=Girl Scout Cookies Order">E-mail Lexi</a> and include your name, address, and the number of boxes (and what kind) you'd like.
-        </p>
-    </div>
     @using (Html.BeginForm("Order", "Home", FormMethod.Post))
     {
 
@@ -23,7 +15,7 @@
             @for (int cookieCount = 0; cookieCount < Model.Cookies.Count; cookieCount++)
             {
                 <div class="cookieItem">
-                    @Html.Label(Model.Cookies[cookieCount].Name) <a href="#" data-toggle="popover" data-trigger="focus" title="@Model.Cookies[cookieCount].Name" data-content="@Model.Cookies[cookieCount].Description">(info)</a><br />
+                    <p class="cookieTitle">@Html.Label(Model.Cookies[cookieCount].Name) <a href="#" data-toggle="popover" data-trigger="focus" title="@Model.Cookies[cookieCount].Name" data-content="@Model.Cookies[cookieCount].Description"><i class="fas fa-info-circle"></i></a></p>
 
                     @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))<br />
                     <img src="@Model.Cookies[cookieCount].ImagePath" />
@@ -32,10 +24,9 @@
             }
             <br />
 
-                <p>
-                    <input type="submit" value="Order" />
-                    @*<button type="button" class="btn btn-success">Next ></button>*@
-                </p>
+            <p>
+                <input type="submit" value="Order"/>
+            </p>
             <p>
 
             </p>
@@ -45,10 +36,29 @@
 
     }
 
-    <script
-    src="http://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
+        <div id="customerModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Submit Order</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
             $('[data-toggle="popover"]').popover();

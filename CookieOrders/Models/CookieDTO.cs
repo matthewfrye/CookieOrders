@@ -28,13 +28,6 @@ namespace CookieOrders.Models
                 Description = Description
             };
 
-            Cookie cookie = new Cookie();
-            cookie.CookieId = CookieId;
-            cookie.CookieType = CookieType;
-            cookie.Name = Name;
-            cookie.ImagePath = ImagePath;
-            cookie.Description = Description;
-
             return cookie;
         }
     }
