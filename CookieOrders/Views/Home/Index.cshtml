@@ -4,29 +4,30 @@
     ViewData["Title"] = "Home";
 }
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-</head>
-<body>
     @using (Html.BeginForm("Order", "Home", FormMethod.Post))
     {
 
-        <div class="gridContainer">
-            @for (int cookieCount = 0; cookieCount < Model.Cookies.Count; cookieCount++)
-            {
-                <div class="cookieItem">
-                    <p class="cookieTitle">@Html.Label(Model.Cookies[cookieCount].Name) <a href="#" data-toggle="popover" data-trigger="focus" title="@Model.Cookies[cookieCount].Name" data-content="@Model.Cookies[cookieCount].Description"><i class="fas fa-info-circle"></i></a></p>
+        <div class="container">
+            <div class="row">
+                @for (int cookieCount = 0; cookieCount < Model.Cookies.Count; cookieCount++)
+                {
+                    <div class="col-sm-4">
+                        <div class="cookieItem">
+                            <p class="cookieTitle">@Html.Label(Model.Cookies[cookieCount].Name) <a href="#" data-toggle="popover" data-trigger="focus" title="@Model.Cookies[cookieCount].Name" data-content="@Model.Cookies[cookieCount].Description"><i class="fas fa-info-circle"></i></a></p>
 
-                    @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))<br />
-                    <img src="@Model.Cookies[cookieCount].ImagePath" />
-                </div>
+                            @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))<br />
+                            <img src="@Model.Cookies[cookieCount].ImagePath" />
+                        </div>
+                    </div>
 
             }
-            <br />
-
-            <p>
-                <input type="submit" value="Order"/>
-            </p>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-large btn-success">Order</button>
+            </div>
         </div>
 
     }
@@ -39,6 +40,3 @@
             $('[data-toggle="popover"]').popover();
         });
     </script>
-
-</body>
-</html>
