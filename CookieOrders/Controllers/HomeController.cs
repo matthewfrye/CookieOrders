@@ -53,21 +53,27 @@ namespace CookieOrders.Controllers
             _context.SaveChanges();
 
             cookieOrderVM.TotalDue = order.TotalAmountDue;
-            
+
             return View("CookieOrder", cookieOrderVM);
         }
-    
+
         public IActionResult CookieOrder(CookieOrderViewModel cookieOrderVM)
         {
-            Customer customer = new Customer();
-            customer.Name = cookieOrderVM.Name;
-            customer.Address = cookieOrderVM.Address;
-            customer.City = cookieOrderVM.City;
-            customer.Email = cookieOrderVM.Email;
-            customer.OrderId = cookieOrderVM.OrderId;
-            _context.Customer.Add(customer);
-            _context.SaveChanges();
-            return View("ConfirmedOrder");
+            if (ModelState.IsValid)
+            {
+                Customer customer = new Customer();
+                customer.Name = cookieOrderVM.Name;
+                customer.Address = cookieOrderVM.Address;
+                customer.City = cookieOrderVM.City;
+                customer.Email = cookieOrderVM.Email;
+                customer.OrderId = cookieOrderVM.OrderId;
+                _context.Customer.Add(customer);
+                _context.SaveChanges();
+                return View("ConfirmedOrder");
+            }
+
+            return View();
+
         }
 
         public IActionResult About()

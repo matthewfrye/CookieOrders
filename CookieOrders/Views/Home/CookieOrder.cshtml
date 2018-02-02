@@ -3,66 +3,55 @@
 @{
     ViewData["Title"] = "CookieOrder";
 }
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-    <h2>Your Order</h2>
+<h2>Your Order</h2>
 
 
-    @using (Html.BeginForm("CookieOrder", "Home", FormMethod.Post))
+@using (Html.BeginForm("CookieOrder", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Name:")
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessage("Name", "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Address:")
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Where can I deliver your cookies?" })
+        @Html.ValidationMessage("Address", "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.Label("City:")
+        @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "Enter your city (no state)" })
+        @Html.ValidationMessage("City", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Email Address:")
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter your email address (me@email.com)" })
+        @Html.ValidationMessage("Email", "", new { @class = "text-danger" })
+    </div>
+    <p />
+
+    <div>
+        @Html.Label("Boxes ordered:")
+    </div>
+    @if (Model != null)
     {
+        @foreach (CookieOrder cookieOrder in Model.CookieOrders)
+        {
+            <div>
+                @Html.Label(Model.Cookies[cookieOrder.CookieId - 1].Name + ":")
+                @Html.Label(cookieOrder.NumberOfBoxes.ToString())
+            </div>
+        }
 
-        <div class="wrapper">
-
-            <div>
-                @Html.Label("Name:")
-                @Html.TextBoxFor(m => m.Name)
-            </div>
-            <p />
-            <p />
-            <div>
-                @Html.Label("Address:")
-                @Html.TextBoxFor(m => m.Address)
-            </div>
-            <p />
-            <p />
-            <div>
-                @Html.Label("City:")
-                @Html.TextBoxFor(m => m.City)
-            </div>
-            <p />
-            <p />
-            <div>
-                @Html.Label("Email Address:")
-                @Html.TextBoxFor(m => m.Email)
-            </div>
-            <p />
-
-            <div>
-                @Html.Label("Boxes ordered:")
-            </div>
-            @foreach (CookieOrder cookieOrder in Model.CookieOrders)
-            {
-                <div>
-                    @Html.Label(Model.Cookies[cookieOrder.CookieId - 1].Name + ":")
-                    @Html.Label(cookieOrder.NumberOfBoxes.ToString())
-                </div>
-            }
-
-            <div>
-                @Html.LabelFor(m => m.TotalDue, "Total Due:")
-                $@Model.TotalDue
-            </div>
-
+        <div>
+            @Html.LabelFor(m => m.TotalDue, "Total Due:")
+            $@Model.TotalDue
         </div>
-
-        <p>
-            @Html.HiddenFor(m => m.OrderId)
-            <input type="submit" value="Confirm Order" />
-        </p>
     }
 
-</body>
-</html>
+    <p>
+        @Html.HiddenFor(m => m.OrderId)
+        <input type="submit" value="Confirm Order" />
+    </p>
+}
