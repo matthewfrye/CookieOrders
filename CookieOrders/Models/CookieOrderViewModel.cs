@@ -5,13 +5,14 @@ namespace CookieOrders.Models
 {
     public class CookieOrderViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter your name.")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter your address.")]
         public string Address { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter your city.")]
         public string City { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter an email address.")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string Email { get; set; }
 
         public decimal TotalDue { get; set; }
