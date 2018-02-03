@@ -6,7 +6,7 @@
 <h2>Your Order</h2>
 
 
-@using (Html.BeginForm("CookieOrder", "Home", FormMethod.Post))
+@using (Html.BeginForm("CookieOrder", "Home", FormMethod.Post, new { id = "cookieOrder" }))
 {
     <div class="form-group">
         @Html.Label("Name:")
@@ -56,6 +56,46 @@
     </p>
 }
 
+    <script src="http://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 <script>
+    $(document).ready(function () {
+        $("#cookieOrder").validate({
+            rules: {
+                'Name': {
+                    required: true
+                },
+                'Address': {
+                    required: true
+                },
+                'City': {
+                    required: true
+                },
+                'Email': {
+                    required: true,
+                    email: true
+                }
+            },
+
+            messages: {
+                'Name': {
+                    required: "Please enter a name."
+                },
+                'Address': {
+                    required: "Please enter an address."
+                },
+                'City': {
+                    required: "Please enter a city (no state)"
+                },
+                'Email': {
+                    required: "Please enter an e-mail address",
+                    email: "Please enter a valid e-mail address."
+                }
+            }
+        });
+    })
 
 </script>
