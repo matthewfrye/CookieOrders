@@ -4,6 +4,7 @@ namespace CookieOrders.Models
 {
     public class CookieViewModel
     {
+        [CookieListValidation(ErrorMessage = "Please select at least 1 box of cookies to order.")]
         public List<CookieDTO> Cookies { get; set; }
 
         public CookieViewModel()

@@ -259,3 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/CookieOrders/Controllers/SuperAdminController.cs
+/CookieOrders/Models/AdminViewModel.cs
+/CookieOrders/Views/SuperAdmin/Index.cshtml

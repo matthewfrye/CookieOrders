@@ -4,11 +4,12 @@
     ViewData["Title"] = "Home";
 }
 
-    @using (Html.BeginForm("Order", "Home", FormMethod.Post))
-    {
-        <p>Order Girl Scout Cookies from Lexi the Cookie Girl!  Orders will be delivered to your house within a week.  Contact information will be gathered on the next page.</p>
-        <p>Cookies are <b>$4/box</b> and gluten-free Trios are <b>$5/box</b>.</p>
-
+@using (Html.BeginForm("Order", "Home", FormMethod.Post))
+{
+    <p>Order Girl Scout Cookies from Lexi the Cookie Girl!  Orders will be delivered to your house within a week.  Contact information will be gathered on the next page.</p>
+    <p>Cookies are <b>$4/box</b> and gluten-free Trios are <b>$5/box</b>.</p>
+            @Html.ValidationMessage("Cookies", "", new { @class = "text-danger", @style = "size:18" })
+ 
         <div class="container">
             <div class="row">
                 @for (int cookieCount = 0; cookieCount < Model.Cookies.Count; cookieCount++)
@@ -22,23 +23,23 @@
                         </div>
                     </div>
 
-            }
+                }
             </div>
         </div>
-        <br />
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-large btn-success">Order</button>
+            <br />
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-large btn-success">Order</button>
+                </div>
             </div>
-        </div>
 
-    }
+}
 
-    <script src="http://code.jquery.com/jquery-3.3.1.js"
-            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-            crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="popover"]').popover();
-        });
-    </script>
+<script src="http://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>

@@ -24,37 +24,43 @@ namespace CookieOrders.Controllers
 
         public async Task<IActionResult> Order(CookieViewModel cookieVM)
         {
-            Order order = new Order();
-            _context.Order.Add(order);
-            _context.SaveChanges();
-            List<Cookie> cookies = await _context.Cookie.ToListAsync();
 
-            CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel();
-            cookieOrderVM.Cookies = cookies;
-            cookieOrderVM.CookieOrders = new List<CookieOrder>();
-            cookieOrderVM.OrderId = order.OrderId;
-            for (int cookieCount = 0; cookieCount < cookies.Count; cookieCount++)
+            if (ModelState.IsValid)
             {
-                if (cookieVM.Cookies[cookieCount].Amount > 0)
+                Order order = new Order();
+                _context.Order.Add(order);
+                _context.SaveChanges();
+                List<Cookie> cookies = await _context.Cookie.ToListAsync();
+
+                CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel();
+                cookieOrderVM.Cookies = cookies;
+                cookieOrderVM.CookieOrders = new List<CookieOrder>();
+                cookieOrderVM.OrderId = order.OrderId;
+                for (int cookieCount = 0; cookieCount < cookies.Count; cookieCount++)
                 {
+                    if (cookieVM.Cookies[cookieCount].Amount > 0)
+                    {
 
-                    CookieOrder cookieOrder = new CookieOrder();
-                    cookieOrder.Cookie = cookies[cookieCount];
-                    cookieOrder.OrderId = order.OrderId;
-                    cookieOrder.CookieId = cookies[cookieCount].CookieId;
-                    cookieOrder.NumberOfBoxes = cookieVM.Cookies[cookieCount].Amount;
-                    _context.CookieOrder.Add(cookieOrder);
-                    cookieOrderVM.CookieOrders.Add(cookieOrder);
+                        CookieOrder cookieOrder = new CookieOrder();
+                        cookieOrder.Cookie = cookies[cookieCount];
+                        cookieOrder.OrderId = order.OrderId;
+                        cookieOrder.CookieId = cookies[cookieCount].CookieId;
+                        cookieOrder.NumberOfBoxes = cookieVM.Cookies[cookieCount].Amount;
+                        _context.CookieOrder.Add(cookieOrder);
+                        cookieOrderVM.CookieOrders.Add(cookieOrder);
 
-                    order.TotalAmountDue = order.TotalAmountDue + (cookieVM.Cookies[cookieCount].Amount * cookies[cookieCount].CostPerBox);
+                        order.TotalAmountDue = order.TotalAmountDue + (cookieVM.Cookies[cookieCount].Amount * cookies[cookieCount].CostPerBox);
+                    }
                 }
+                _context.Order.Update(order);
+                _context.SaveChanges();
+
+                cookieOrderVM.TotalDue = order.TotalAmountDue;
+
+                return View("CookieOrder", cookieOrderVM);
             }
-            _context.Order.Update(order);
-            _context.SaveChanges();
-
-            cookieOrderVM.TotalDue = order.TotalAmountDue;
-
-            return View("CookieOrder", cookieOrderVM);
+            CookieViewModel cookieErrorVM = new CookieViewModel(await _context.Cookie.ToListAsync());
+            return View("Index", cookieErrorVM);
         }
 
         public IActionResult CookieOrder(CookieOrderViewModel cookieOrderVM)
