@@ -6,32 +6,40 @@
 
 @using (Html.BeginForm("Order", "Home", FormMethod.Post))
 {
-    <p>Order Girl Scout Cookies from Lexi the Cookie Girl!  Orders will be delivered to your house within a week.  Contact information will be gathered on the next page.</p>
-    <p>Cookies are <b>$4/box</b> and gluten-free Trios are <b>$5/box</b>.</p>
-            @Html.ValidationMessage("Cookies", "", new { @class = "text-danger", @style = "size:18" })
- 
-        <div class="container">
-            <div class="row">
-                @for (int cookieCount = 0; cookieCount < Model.Cookies.Count; cookieCount++)
-                {
-                    <div class="col-sm-4">
-                        <div class="cookieItem">
-                            <p class="cookieTitle">@Html.Label(Model.Cookies[cookieCount].Name) <a href="#" data-toggle="popover" data-trigger="focus" title="@Model.Cookies[cookieCount].Name" data-content="@Model.Cookies[cookieCount].Description"><i class="fas fa-info-circle"></i></a></p>
+    <h1>Order Girl Scout Cookies from Lexi the Cookie Girl!</h1>
+    <p>Orders will be delivered to your house within a week.  Contact information will be gathered on the next page.</p>
+    <p>Cookies are <b>$4/box</b> and gluten-free Trios are <b>$5/box</b>.</p><br />
 
-                            @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))<br />
-                            <img src="@Model.Cookies[cookieCount].ImagePath" />
-                        </div>
+    @foreach (var item in ViewContext.ViewData.ModelState)
+    {
+        if (item.Value.Errors.Any())
+        {
+            <p>@Html.ValidationMessage("Cookies", "", new { @class = "alert alert-danger" })</p><br />
+        }
+    }
+
+    <div class="container">
+        <div class="row">
+            @for (int cookieCount = 0; cookieCount < Model.Cookies.Count; cookieCount++)
+            {
+                <div class="col-sm-4">
+                    <div class="cookieItem">
+                        <p class="cookieTitle">@Html.Label(Model.Cookies[cookieCount].Name) <a href="#" data-toggle="popover" data-trigger="focus" title="@Model.Cookies[cookieCount].Name" data-content="@Model.Cookies[cookieCount].Description"><i class="fas fa-info-circle"></i></a></p>
+
+                        @Html.DropDownListFor(m => m.Cookies[cookieCount].Amount, new SelectList(HtmlLists.CookieAmounts, "Value", "Text"))<br />
+                        <img src="@Model.Cookies[cookieCount].ImagePath" />
                     </div>
-
-                }
-            </div>
-        </div>
-            <br />
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-large btn-success">Order</button>
                 </div>
-            </div>
+
+            }
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-large btn-success">Order</button>
+        </div>
+    </div>
 
 }
 
