@@ -32,20 +32,24 @@ namespace CookieOrders.Controllers
                 _context.SaveChanges();
                 List<Cookie> cookies = await _context.Cookie.ToListAsync();
 
-                CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel();
-                cookieOrderVM.Cookies = cookies;
-                cookieOrderVM.CookieOrders = new List<CookieOrder>();
-                cookieOrderVM.OrderId = order.OrderId;
+                CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel
+                {
+                    Cookies = cookies,
+                    CookieOrders = new List<CookieOrder>(),
+                    OrderId = order.OrderId
+                };
                 for (int cookieCount = 0; cookieCount < cookies.Count; cookieCount++)
                 {
                     if (cookieVM.Cookies[cookieCount].Amount > 0)
                     {
 
-                        CookieOrder cookieOrder = new CookieOrder();
-                        cookieOrder.Cookie = cookies[cookieCount];
-                        cookieOrder.OrderId = order.OrderId;
-                        cookieOrder.CookieId = cookies[cookieCount].CookieId;
-                        cookieOrder.NumberOfBoxes = cookieVM.Cookies[cookieCount].Amount;
+                        CookieOrder cookieOrder = new CookieOrder
+                        {
+                            Cookie = cookies[cookieCount],
+                            OrderId = order.OrderId,
+                            CookieId = cookies[cookieCount].CookieId,
+                            NumberOfBoxes = cookieVM.Cookies[cookieCount].Amount
+                        };
                         _context.CookieOrder.Add(cookieOrder);
                         cookieOrderVM.CookieOrders.Add(cookieOrder);
 
@@ -67,12 +71,14 @@ namespace CookieOrders.Controllers
         {
             if (ModelState.IsValid)
             {
-                Customer customer = new Customer();
-                customer.Name = cookieOrderVM.Name;
-                customer.Address = cookieOrderVM.Address;
-                customer.City = cookieOrderVM.City;
-                customer.Email = cookieOrderVM.Email;
-                customer.OrderId = cookieOrderVM.OrderId;
+                Customer customer = new Customer
+                {
+                    Name = cookieOrderVM.Name,
+                    Address = cookieOrderVM.Address,
+                    City = cookieOrderVM.City,
+                    Email = cookieOrderVM.Email,
+                    OrderId = cookieOrderVM.OrderId
+                };
                 _context.Customer.Add(customer);
                 _context.SaveChanges();
                 return View("ConfirmedOrder");
@@ -80,13 +86,6 @@ namespace CookieOrders.Controllers
 
             return View();
 
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
         }
 
         public IActionResult Contact()
