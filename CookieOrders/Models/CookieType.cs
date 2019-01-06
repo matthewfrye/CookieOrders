@@ -20,7 +20,7 @@ namespace CookieOrders.Models
         Shortbread,
         [Description("Peanut Butter Sandwiches")]
         PeanutButterSandwiches,
-        [Description("Gluten-free Trios")]
-        GlutenFreeTrios
+        [Description("Gluten-free Caramel Chocolate Chip")]
+        GlutenFreeCarChocChip
     }
 }
