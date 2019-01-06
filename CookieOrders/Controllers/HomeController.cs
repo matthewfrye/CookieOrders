@@ -83,7 +83,8 @@ namespace CookieOrders.Controllers
                     Address = cookieOrderVM.Address,
                     City = cookieOrderVM.City,
                     Email = cookieOrderVM.Email,
-                    OrderId = cookieOrderVM.OrderId
+                    OrderId = cookieOrderVM.OrderId,
+                    Test = cookieOrderVM.Email == _configuration.GetSection("AppSettings").GetSection("AdminEmailAddress").Value ? true : false
                 };
                 _context.Customer.Add(customer);
                 _context.SaveChanges();
