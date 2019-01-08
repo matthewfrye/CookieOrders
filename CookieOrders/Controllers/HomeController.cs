@@ -2,12 +2,12 @@
 using CookieOrders.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 
 namespace CookieOrders.Controllers
 {
@@ -34,6 +34,8 @@ namespace CookieOrders.Controllers
             if (ModelState.IsValid)
             {
                 Order order = new Order();
+
+                // Matt Frye, 2017 architecture meeting: "Why would you ever call the data layer from the controller?"
                 _context.Order.Add(order);
                 _context.SaveChanges();
                 List<Cookie> cookies = await _context.Cookie.ToListAsync();
@@ -124,7 +126,6 @@ namespace CookieOrders.Controllers
             string adminEmailAddress = _configuration.GetSection("AppSettings").GetSection("AdminEmailAddress").Value;
             string adminEmailPassword = _configuration.GetSection("AppSettings").GetSection("AdminEmailPassword").Value;
             string adminEmailDisplayName = _configuration.GetSection("AppSettings").GetSection("AdminEmailDisplayName").Value;
-            
             //send email block (move to separate method/class?)
 
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
@@ -142,21 +143,18 @@ namespace CookieOrders.Controllers
                 mail.To.Add(new MailAddress(email));
             }
 
-            if(customerEmail)
+            if (customerEmail)
             {
                 mail.Subject = "Thank you for your Girl Scout Cookie order!";
                 mail.Body = "Thank you for your order.";
-                
             }
             else
             {
                 mail.Subject = "Someone ordered Cookies!!";
                 //todo - add link below with a way to view the order in the manager screen
                 mail.Body = $"Check here - Site/Order/{orderId}";
-                
             }
 
-            smtpClient.Send(mail);
             //
         }
     }

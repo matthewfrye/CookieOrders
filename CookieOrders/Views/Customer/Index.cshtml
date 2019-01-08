@@ -22,13 +22,13 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    <label asp-for="@item.Name"></label>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Address)
+                    <label asp-for="@item.Address"></label>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.City)
+                    <label asp-for="@item.City"></label>
                 </td>
             </tr>
         }

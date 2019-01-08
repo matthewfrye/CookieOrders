@@ -31,23 +31,25 @@
     </div>
 
     <div>
-        <label>"Boxes ordered:"</label>
-    </div>
+        <label>Boxes ordered:</label>
 
-    @if (Model != null)
-    {
-        @foreach (CookieOrder cookieOrder in Model.CookieOrders)
+        @if (Model != null)
         {
+            @foreach (CookieOrder cookieOrder in Model.CookieOrders)
+            {
+                <div>
+                    @Html.Label(Model.Cookies[cookieOrder.CookieId - 1].Name + ":")
+                    @Html.Label(cookieOrder.NumberOfBoxes.ToString())
+                </div>
+            }
+
             <div>
-                @Html.Label(Model.Cookies[cookieOrder.CookieId - 1].Name + ":")
-                @Html.Label(cookieOrder.NumberOfBoxes.ToString())
+                <label asp-for="TotalDue">Total Due: $@Model.TotalDue</label>
             </div>
         }
+    </div>
 
-        <div>
-            <label asp-for="TotalDue">Total Due: $@Model.TotalDue</label>
-        </div>
-    }
+
 
     <p>
         <input asp-for="OrderId" type="hidden" />
