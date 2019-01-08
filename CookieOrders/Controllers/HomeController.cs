@@ -1,19 +1,25 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using CookieOrders.Data;
 using CookieOrders.Models;
-using CookieOrders.Data;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace CookieOrders.Controllers
 {
     public class HomeController : Controller
     {
         private readonly CustomerContext _context;
-        public HomeController(CustomerContext context)
+        private readonly IConfiguration _configuration;
+
+        public HomeController(CustomerContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
@@ -77,10 +83,14 @@ namespace CookieOrders.Controllers
                     Address = cookieOrderVM.Address,
                     City = cookieOrderVM.City,
                     Email = cookieOrderVM.Email,
-                    OrderId = cookieOrderVM.OrderId
+                    OrderId = cookieOrderVM.OrderId,
+                    Test = cookieOrderVM.Email == _configuration.GetSection("AppSettings").GetSection("AdminEmailAddress").Value ? true : false
                 };
                 _context.Customer.Add(customer);
                 _context.SaveChanges();
+
+                SendEmails(cookieOrderVM.Email, cookieOrderVM.OrderId);
+
                 return View("ConfirmedOrder");
             }
 
@@ -98,6 +108,56 @@ namespace CookieOrders.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private void SendEmails(string customerEmail, int orderId)
+        {
+            //todo - move these to tokenized values in CI process
+            string orderAlertEmailAddresses = _configuration.GetSection("AppSettings").GetSection("OrderAlertEmailAddresses").Value;
+
+            SendEmail(customerEmail, orderId, true);
+            SendEmail(orderAlertEmailAddresses, orderId, false);
+        }
+
+        private void SendEmail(string emailAddress, int orderId, bool customerEmail)
+        {
+            string adminEmailAddress = _configuration.GetSection("AppSettings").GetSection("AdminEmailAddress").Value;
+            string adminEmailPassword = _configuration.GetSection("AppSettings").GetSection("AdminEmailPassword").Value;
+            string adminEmailDisplayName = _configuration.GetSection("AppSettings").GetSection("AdminEmailDisplayName").Value;
+            
+            //send email block (move to separate method/class?)
+
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new System.Net.NetworkCredential(adminEmailAddress, adminEmailPassword);
+            smtpClient.EnableSsl = true;
+            MailMessage mail = new MailMessage();
+
+            //Setting From , To and CC
+            mail.From = new MailAddress(adminEmailAddress, adminEmailDisplayName);
+
+            foreach (string email in emailAddress.Split(',').ToList())
+            {
+                mail.To.Add(new MailAddress(email));
+            }
+
+            if(customerEmail)
+            {
+                mail.Subject = "Thank you for your Girl Scout Cookie order!";
+                mail.Body = "Thank you for your order.";
+                
+            }
+            else
+            {
+                mail.Subject = "Someone ordered Cookies!!";
+                //todo - add link below with a way to view the order in the manager screen
+                mail.Body = $"Check here - Site/Order/{orderId}";
+                
+            }
+
+            smtpClient.Send(mail);
+            //
         }
     }
 }
