@@ -34,26 +34,26 @@
     <tbody>
         @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmailAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfBoxes)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CookieType)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <label asp-for="@item.CustomerName"></label>
+            </td>
+            <td>
+                <label asp-for="@item.Address"></label>
+            </td>
+            <td>
+                <label asp-for="@item.City"></label>
+            </td>
+            <td>
+                <label asp-for="@item.EmailAddress"></label>
+            </td>
+            <td>
+                <label asp-for="@item.NumberOfBoxes"></label>
+            </td>
+            <td>
+                <label asp-for="@item.CookieType"></label>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
