@@ -1,0 +1,103 @@
+﻿@model IEnumerable<AdminViewModel>
+
+
+<style>
+
+    #orders {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #orders label {
+        font-weight: normal !important;
+    }
+
+    #orders td, #orders th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #orders tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #orders tr:hover {
+        background-color: #ddd;
+    }
+
+    #orders th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #orders tfoot {
+        font-weight: bold;
+    }
+</style>
+
+<div style="overflow-x:auto;">
+    <table id="orders">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmailAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfBoxes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CookieType)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <label asp-for="@item.CustomerName">@item.CustomerName</label>
+                    </td>
+                    <td>
+                        <label asp-for="@item.Address">@item.Address</label>
+                    </td>
+                    <td>
+                        @item.City
+                    </td>
+                    <td>
+                        <label asp-for="@item.EmailAddress">@item.EmailAddress</label>
+                    </td>
+                    <td>
+                        <label asp-for="@item.NumberOfBoxes">@item.NumberOfBoxes</label>
+                    </td>
+                    <td>
+                        <label asp-for="@item.CookieType">@item.CookieType</label>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Total Orders:</td>
+                <td>@Model.Count()</td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
