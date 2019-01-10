@@ -6,54 +6,6 @@
 }
 
 
-<h2>Full Order List</h2>
+<h2>Orders To Deliver</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmailAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfBoxes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CookieType)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <label asp-for="@item.CustomerName"></label>
-                </td>
-                <td>
-                    <label asp-for="@item.Address"></label>
-                </td>
-                <td>
-                    <label asp-for="@item.City"></label>
-                </td>
-                <td>
-                    <label asp-for="@item.EmailAddress"></label>
-                </td>
-                <td>
-                    <label asp-for="@item.NumberOfBoxes"></label>
-                </td>
-                <td>
-                    <label asp-for="@item.CookieType"></label>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@await Html.PartialAsync("_OrdersAdmin", Model)

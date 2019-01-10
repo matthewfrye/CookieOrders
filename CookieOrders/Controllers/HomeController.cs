@@ -155,7 +155,7 @@ namespace CookieOrders.Controllers
                 mail.Body = $"Check here - Site/Order/{orderId}";
             }
 
-            //
+            smtpClient.Send(mail);
         }
     }
 }
