@@ -35,7 +35,6 @@ namespace CookieOrders.Controllers
             {
                 Order order = new Order();
 
-                // Matt Frye, 2017 architecture meeting: "Why would you ever call the data layer from the controller?"
                 _context.Order.Add(order);
                 _context.SaveChanges();
                 List<Cookie> cookies = await _context.Cookie.ToListAsync();
@@ -145,8 +144,9 @@ namespace CookieOrders.Controllers
 
             if (customerEmail)
             {
+
                 mail.Subject = "Thank you for your Girl Scout Cookie order!";
-                mail.Body = "Thank you for your order.";
+                mail.Body = GetEmailWording(orderId);
             }
             else
             {
@@ -156,6 +156,27 @@ namespace CookieOrders.Controllers
             }
 
             smtpClient.Send(mail);
+        }
+
+        private string GetEmailWording(int orderId)
+        {
+            string emailWording = "Thank you for ordering from Lexi the Cookie Girl!  Lexi will email soon with details on when the cookies can be delivered.  Cookies can be paid for with cash, check (payable to Troop 2136), or credit card.  Order details are below.\n\n";
+
+            //not the most efficient.  WIll refactor later
+            IList<CookieOrder> cookieOrders = _context.CookieOrder.Where(c => c.OrderId == orderId).ToList();
+            decimal totalOwed = 0;
+            foreach (CookieOrder cookieOrder in cookieOrders)
+            {
+                string cookieName = _context.Cookie.Where(co => co.CookieId == cookieOrder.CookieId).SingleOrDefault().Name;
+                emailWording = string.Concat(emailWording, $"{cookieOrder.NumberOfBoxes} {cookieName}\n");
+                if (totalOwed == 0)
+                {
+                    totalOwed = _context.Order.Where(o => o.OrderId == orderId).SingleOrDefault().TotalAmountDue;
+                }
+            }
+
+            emailWording = string.Concat(emailWording, $"Total owed = ${totalOwed}");
+            return emailWording;
         }
     }
 }
