@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CookieOrders.Models
@@ -12,5 +14,7 @@ namespace CookieOrders.Models
         public DateTime? ScheduledDeliveryDate { get; set; }
 
         public DateTime? DeliveredDate { get; set; }
+
+        public IEnumerable<CookieOrder> CookieOrders { get; set; }
     }
 }

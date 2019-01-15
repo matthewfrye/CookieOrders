@@ -12,5 +12,7 @@ namespace CookieOrders.Models
         public string City { get; set; }
         public string Email { get; set; }
         public bool? Test { get; set; }
+
+        public Order Order { get; set; }
     }
 }
