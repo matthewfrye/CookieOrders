@@ -1,8 +1,10 @@
 ﻿using CookieOrders.Data;
 using CookieOrders.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CookieOrders.Controllers
 {
@@ -18,6 +20,21 @@ namespace CookieOrders.Controllers
         {
             IList<AdminViewModel> adminViewModelList = GetNonTestOrders();
             return View(adminViewModelList);
+        }
+
+        public async Task<IActionResult> View(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var customer = await _context.Customer
+                .Include(o => o.Order)
+                    .ThenInclude(c => c.CookieOrders)
+                .SingleOrDefaultAsync(i => i.CustomerId == id);
+
+            return View(customer);
         }
 
         public IActionResult OrdersToDeliver()
