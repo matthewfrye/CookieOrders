@@ -125,7 +125,6 @@ namespace CookieOrders.Controllers
             string adminEmailAddress = _configuration.GetSection("AppSettings").GetSection("AdminEmailAddress").Value;
             string adminEmailPassword = _configuration.GetSection("AppSettings").GetSection("AdminEmailPassword").Value;
             string adminEmailDisplayName = _configuration.GetSection("AppSettings").GetSection("AdminEmailDisplayName").Value;
-            //send email block (move to separate method/class?)
 
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
 
@@ -146,7 +145,7 @@ namespace CookieOrders.Controllers
             {
 
                 mail.Subject = "Thank you for your Girl Scout Cookie order!";
-                mail.Body = GetEmailWording(orderId);
+                mail.Body = GetEmailWording(customerId);
             }
             else
             {
@@ -158,24 +157,22 @@ namespace CookieOrders.Controllers
             smtpClient.Send(mail);
         }
 
-        private string GetEmailWording(int orderId)
+        private string GetEmailWording(int customerId)
         {
             string emailWording = "Thank you for ordering from Lexi the Cookie Girl!  Lexi will email soon with details on when the cookies can be delivered.  Cookies can be paid for with cash, check (payable to Troop 2136), or credit card.  Order details are below.\n\n";
 
-            //not the most efficient.  WIll refactor later
-            IList<CookieOrder> cookieOrders = _context.CookieOrder.Where(c => c.OrderId == orderId).ToList();
-            decimal totalOwed = 0;
-            foreach (CookieOrder cookieOrder in cookieOrders)
+            var customer = _context.Customer
+                .Include(o => o.Order)
+                    .ThenInclude(co => co.CookieOrders)
+                    .ThenInclude(c => c.Cookie)
+                .SingleOrDefault(i => i.CustomerId == customerId);
+            
+            foreach (CookieOrder cookieOrder in customer.Order.CookieOrders)
             {
-                string cookieName = _context.Cookie.Where(co => co.CookieId == cookieOrder.CookieId).SingleOrDefault().Name;
-                emailWording = string.Concat(emailWording, $"{cookieOrder.NumberOfBoxes} {cookieName}\n");
-                if (totalOwed == 0)
-                {
-                    totalOwed = _context.Order.Where(o => o.OrderId == orderId).SingleOrDefault().TotalAmountDue;
-                }
+                emailWording = string.Concat(emailWording, $"{cookieOrder.NumberOfBoxes} {cookieOrder.Cookie.Name}\n");
             }
 
-            emailWording = string.Concat(emailWording, $"Total owed = ${totalOwed}");
+            emailWording = string.Concat(emailWording, $"Total owed = ${customer.Order.TotalAmountDue}");
             return emailWording;
         }
     }
