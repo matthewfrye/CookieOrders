@@ -31,7 +31,8 @@ namespace CookieOrders.Controllers
 
             var customer = await _context.Customer
                 .Include(o => o.Order)
-                    .ThenInclude(c => c.CookieOrders)
+                    .ThenInclude(co => co.CookieOrders)
+                    .ThenInclude(c => c.Cookie)
                 .SingleOrDefaultAsync(i => i.CustomerId == id);
 
             return View(customer);

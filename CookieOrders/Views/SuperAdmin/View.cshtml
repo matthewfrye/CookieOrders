@@ -11,12 +11,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.OrderId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OrderId)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd>
@@ -45,6 +39,35 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Test)
+        </dd>
+    </dl>
+</div>
+<div>
+    <h4>Order Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.OrderId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.OrderId)
+        </dd>
+
+        @foreach (CookieOrder cookieOrder in Model.Order.CookieOrders)
+        {
+            <dt>
+                @Html.DisplayFor(model => cookieOrder.NumberOfBoxes)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => cookieOrder.Cookie.Name)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.TotalAmountDue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.TotalAmountDue)
         </dd>
     </dl>
 </div>
