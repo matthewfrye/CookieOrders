@@ -90,7 +90,7 @@ namespace CookieOrders.Controllers
                 _context.Customer.Add(customer);
                 _context.SaveChanges();
 
-                SendEmails(cookieOrderVM.Email, cookieOrderVM.OrderId);
+                SendEmails(cookieOrderVM.Email, cookieOrderVM.OrderId, customer.CustomerId);
 
                 return View("ConfirmedOrder");
             }
@@ -111,16 +111,16 @@ namespace CookieOrders.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private void SendEmails(string customerEmail, int orderId)
+        private void SendEmails(string customerEmail, int orderId, int customerId)
         {
             //todo - move these to tokenized values in CI process
             string orderAlertEmailAddresses = _configuration.GetSection("AppSettings").GetSection("OrderAlertEmailAddresses").Value;
 
-            SendEmail(customerEmail, orderId, true);
-            SendEmail(orderAlertEmailAddresses, orderId, false);
+            SendEmail(customerEmail, orderId, customerId, true);
+            SendEmail(orderAlertEmailAddresses, orderId,customerId, false);
         }
 
-        private void SendEmail(string emailAddress, int orderId, bool customerEmail)
+        private void SendEmail(string emailAddress, int orderId, int customerId, bool customerEmail)
         {
             string adminEmailAddress = _configuration.GetSection("AppSettings").GetSection("AdminEmailAddress").Value;
             string adminEmailPassword = _configuration.GetSection("AppSettings").GetSection("AdminEmailPassword").Value;
@@ -152,7 +152,7 @@ namespace CookieOrders.Controllers
             {
                 mail.Subject = "Someone ordered Cookies!!";
                 //todo - add link below with a way to view the order in the manager screen
-                mail.Body = $"Check here - Site/Order/{orderId}";
+                mail.Body = $"Check here - https://{_configuration.GetSection("AppSettings").GetSection("WebsiteDomain").Value}/SuperAdmin/View/{customerId}";
             }
 
             smtpClient.Send(mail);
