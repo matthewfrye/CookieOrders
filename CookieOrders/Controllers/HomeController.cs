@@ -159,7 +159,7 @@ namespace CookieOrders.Controllers
 
         private string GetEmailWording(int customerId)
         {
-            string emailWording = "Thank you for ordering from Lexi the Cookie Girl!  Lexi will email soon with details on when the cookies can be delivered.  Cookies can be paid for with cash, check (payable to Troop 2136), or credit card.  Order details are below.\n\n";
+            string emailWording = "Thank you for ordering from Lexi the Cookie Girl!  Lexi will email soon with details on when the cookies can be delivered.  Cookies can be paid for with cash, check (payable to Troop 2136), or credit card.  If you have any questions, you can reach Lexi by email - lexithecookiegirl@gmail.com.  Order details are below.\n\n";
 
             var customer = _context.Customer
                 .Include(o => o.Order)
