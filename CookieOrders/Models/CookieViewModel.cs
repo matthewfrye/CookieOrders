@@ -16,14 +16,17 @@ namespace CookieOrders.Models
             Cookies = new List<CookieDTO>();
             foreach (Cookie cookie in cookieList)
             {
-                Cookies.Add(new CookieDTO()
+                if (cookie.OutOfStock == false)
                 {
-                    CookieId = cookie.CookieId,
-                    CookieType = cookie.CookieType,
-                    ImagePath = cookie.ImagePath,
-                    Name = cookie.Name,
-                    Description = cookie.Description
-                });
+                    Cookies.Add(new CookieDTO()
+                    {
+                        CookieId = cookie.CookieId,
+                        CookieType = cookie.CookieType,
+                        ImagePath = cookie.ImagePath,
+                        Name = cookie.Name,
+                        Description = cookie.Description
+                    });
+                }
             }
         }
     }
