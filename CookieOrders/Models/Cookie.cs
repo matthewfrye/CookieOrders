@@ -13,5 +13,6 @@ namespace CookieOrders.Models
         public string ImagePath { get; set; }
         public decimal CostPerBox { get; set; }
         public string Description { get; set; }
+        public bool OutOfStock { get; set; }
     }
 }
