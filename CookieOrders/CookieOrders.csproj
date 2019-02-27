@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="jQuery.Validation" Version="1.17.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
   </ItemGroup>
 
