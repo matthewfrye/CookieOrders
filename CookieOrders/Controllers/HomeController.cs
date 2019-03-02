@@ -37,7 +37,7 @@ namespace CookieOrders.Controllers
 
                 _context.Order.Add(order);
                 _context.SaveChanges();
-                List<Cookie> cookies = await _context.Cookie.ToListAsync();
+                List<Cookie> cookies = await _context.Cookie.Where(c => c.OutOfStock == false).ToListAsync();
 
                 CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel
                 {
