@@ -38,7 +38,8 @@
             @foreach (CookieOrder cookieOrder in Model.CookieOrders)
             {
                 <div>
-                    @Html.Label(Model.Cookies[cookieOrder.CookieId - 1].Name + ":")
+                    
+                    @Html.Label(Model.Cookies.Where(c => c.CookieId == cookieOrder.CookieId).SingleOrDefault().Name + ":")
                     @Html.Label(cookieOrder.NumberOfBoxes.ToString())
                 </div>
             }
