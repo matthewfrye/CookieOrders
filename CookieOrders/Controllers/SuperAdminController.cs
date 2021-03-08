@@ -61,7 +61,7 @@ namespace CookieOrders.Controllers
                     Customer customer = _context.Customer.FirstOrDefault(m => m.OrderId == order.OrderId);
                     if (customer != null && customer.Name.Length > 0 && (customer.Test == null || customer.Test == false))
                     {
-                        IEnumerable<CookieOrder> cookieOrderList = _context.CookieOrder.Where(c => c.OrderId == customer.OrderId);
+                        IEnumerable<CookieOrder> cookieOrderList = _context.CookieOrder.Where(c => c.OrderId == customer.OrderId).ToList();
                         foreach (CookieOrder cookieOrder in cookieOrderList)
                         {
 
