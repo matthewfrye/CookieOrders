@@ -27,6 +27,19 @@ jobs:
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        
+        #substitute production appsettings entries to appsettings json file
+      - name: App Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: '${{env.DOTNET_ROOT}}/lexithecookiegirl/appsettings.json'
+        env:
+          ConnectionStrings.Default: ${{ secrets.DBCONNECTIONSTRING }}
+          App.AdminEmailAddress: ${{ secrets.ADMINEMAILADDRESS }}
+          App.AdminEmailDisplayName: ${{ secrets.ADMINEMAILDISPLAYNAME }}
+          App.AdminEmailPassword: ${{ secrets.ADMINEMAILPASSWORD }}
+          App.OrderAlertEmailAddresses: ${{ secrets.ORDERALERTEMAILADDRESSES }}
+          App.WebsiteDomain: ${{ secrets.WEBSITEDOMAIN }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
