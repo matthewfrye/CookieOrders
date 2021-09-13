@@ -29,7 +29,7 @@ jobs:
       - name: App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
-          files: 'appsettings.json'
+          files: '${{env.DOTNET_ROOT}}/myapp/CookieOrders/appsettings.json'
         env:
           ConnectionStrings.Default: ${{ secrets.DBCONNECTIONSTRING }}
           
