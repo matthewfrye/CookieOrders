@@ -24,11 +24,11 @@ jobs:
           files: '**/appsettings.json'
         env:
           ConnectionStrings.DefaultConnection: ${{ secrets.DBCONNECTIONSTRING }}
-          App.AdminEmailAddress: ${{ secrets.ADMINEMAILADDRESS }}
-          App.AdminEmailDisplayName: ${{ secrets.ADMINEMAILDISPLAYNAME }}
-          App.AdminEmailPassword: ${{ secrets.ADMINEMAILPASSWORD }}
-          App.OrderAlertEmailAddresses: ${{ secrets.ORDERALERTEMAILADDRESSES }}
-          App.WebsiteDomain: ${{ secrets.WEBSITEDOMAIN }}
+          AppSettings.AdminEmailAddress: ${{ secrets.ADMINEMAILADDRESS }}
+          AppSettings.AdminEmailDisplayName: ${{ secrets.ADMINEMAILDISPLAYNAME }}
+          AppSettings.AdminEmailPassword: ${{ secrets.ADMINEMAILPASSWORD }}
+          AppSettings.OrderAlertEmailAddresses: ${{ secrets.ORDERALERTEMAILADDRESSES }}
+          AppSettings.WebsiteDomain: ${{ secrets.WEBSITEDOMAIN }}
           
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
