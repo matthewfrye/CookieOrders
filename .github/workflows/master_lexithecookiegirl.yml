@@ -25,14 +25,11 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-        
         #substitute production appsettings entries to appsettings json file
       - name: App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
-          files: '${{env.DOTNET_ROOT}}/CookieORders/CookieOrders/CookieOrders/appsettings.json'
+          files: '${{env.DOTNET_ROOT}}/myapp/appsettings.json'
         env:
           ConnectionStrings.Default: ${{ secrets.DBCONNECTIONSTRING }}
           App.AdminEmailAddress: ${{ secrets.ADMINEMAILADDRESS }}
@@ -40,6 +37,10 @@ jobs:
           App.AdminEmailPassword: ${{ secrets.ADMINEMAILPASSWORD }}
           App.OrderAlertEmailAddresses: ${{ secrets.ORDERALERTEMAILADDRESSES }}
           App.WebsiteDomain: ${{ secrets.WEBSITEDOMAIN }}
+          
+          
+      - name: dotnet publish
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
