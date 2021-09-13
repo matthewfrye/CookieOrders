@@ -32,11 +32,6 @@ jobs:
           files: './CookieOrders/appsettings.json'
         env:
           ConnectionStrings.Default: ${{ secrets.DBCONNECTIONSTRING }}
-          App.AdminEmailAddress: ${{ secrets.ADMINEMAILADDRESS }}
-          App.AdminEmailDisplayName: ${{ secrets.ADMINEMAILDISPLAYNAME }}
-          App.AdminEmailPassword: ${{ secrets.ADMINEMAILPASSWORD }}
-          App.OrderAlertEmailAddresses: ${{ secrets.ORDERALERTEMAILADDRESSES }}
-          App.WebsiteDomain: ${{ secrets.WEBSITEDOMAIN }}
           
           
       - name: dotnet publish
