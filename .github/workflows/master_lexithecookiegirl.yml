@@ -29,6 +29,7 @@ jobs:
           AppSettings.AdminEmailPassword: ${{ secrets.ADMINEMAILPASSWORD }}
           AppSettings.OrderAlertEmailAddresses: ${{ secrets.ORDERALERTEMAILADDRESSES }}
           AppSettings.WebsiteDomain: ${{ secrets.WEBSITEDOMAIN }}
+          AppSettings.ABCCookiesSiteURL: ${{ secrets.ABCCOOKIESSITEURL }}
           
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
