@@ -10,6 +10,12 @@
     <p>Orders will be delivered to your house within a week.  Contact information will be gathered on the next page.</p>
     <p>Cookies are <b>$4/box</b> and gluten-free Caramel Chocolate Chip are <b>$5/box</b>.</p><br />
 
+    @if (@Model.DirectShipURL != null && @Model.DirectShipURL != "")
+    {
+        <p>If you live outside of the Madison area, you can still get cookies and support Lexi!</p>
+        <p>You can order direct shipped to your house cookies via <a href="@Model.DirectShipURL">this website</a></p><br />
+    }
+
     @foreach (var item in ViewContext.ViewData.ModelState)
     {
         if (item.Value.Errors.Any())
