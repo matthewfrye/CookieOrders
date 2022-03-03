@@ -6,13 +6,16 @@ namespace CookieOrders.Models
     {
         [CookieListValidation(ErrorMessage = "Please select at least 1 box of cookies to order.")]
         public List<CookieDTO> Cookies { get; set; }
+        public string DirectShipURL { get; private set; }
 
         public CookieViewModel()
         {
 
         }
-        public CookieViewModel(List<Cookie> cookieList)
+        public CookieViewModel(List<Cookie> cookieList, string directShipURL)
         {
+            DirectShipURL = directShipURL;
+
             Cookies = new List<CookieDTO>();
             foreach (Cookie cookie in cookieList)
             {

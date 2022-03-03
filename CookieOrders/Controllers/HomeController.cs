@@ -24,7 +24,7 @@ namespace CookieOrders.Controllers
 
         public async Task<IActionResult> Index()
         {
-            CookieViewModel cookieVM = new CookieViewModel(await _context.Cookie.ToListAsync());
+            CookieViewModel cookieVM = new CookieViewModel(await _context.Cookie.ToListAsync(), _configuration.GetSection("AppSettings").GetSection("ABCCookiesSiteURL").Value);
             return View(cookieVM);
         }
 
@@ -70,7 +70,7 @@ namespace CookieOrders.Controllers
 
                 return View("CookieOrder", cookieOrderVM);
             }
-            CookieViewModel cookieErrorVM = new CookieViewModel(await _context.Cookie.ToListAsync());
+            CookieViewModel cookieErrorVM = new CookieViewModel(await _context.Cookie.ToListAsync(), _configuration.GetSection("AppSettings").GetSection("ABCCookiesSiteURL").Value);
             return View("Index", cookieErrorVM);
         }
 
@@ -113,7 +113,6 @@ namespace CookieOrders.Controllers
 
         private void SendEmails(string customerEmail, int orderId, int customerId)
         {
-            //todo - move these to tokenized values in CI process
             string orderAlertEmailAddresses = _configuration.GetSection("AppSettings").GetSection("OrderAlertEmailAddresses").Value;
 
             SendEmail(customerEmail, orderId, customerId, true);
