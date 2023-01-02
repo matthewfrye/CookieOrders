@@ -30,12 +30,6 @@ jobs:
           AppSettings.OrderAlertEmailAddresses: ${{ secrets.ORDERALERTEMAILADDRESSES }}
           AppSettings.WebsiteDomain: ${{ secrets.WEBSITEDOMAIN }}
           AppSettings.ABCCookiesSiteURL: ${{ secrets.ABCCOOKIESSITEURL }}
-          
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '3.1.301'
-          include-prerelease: true
 
       - name: Build with dotnet
         run: dotnet build --configuration Release          
