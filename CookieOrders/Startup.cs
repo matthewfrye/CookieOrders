@@ -22,8 +22,7 @@ namespace CookieOrders
         {
             services.AddDbContext<CustomerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc(option => option.EnableEndpointRouting = false)
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
