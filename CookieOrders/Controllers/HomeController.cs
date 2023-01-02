@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -37,7 +38,7 @@ namespace CookieOrders.Controllers
 
                 _context.Order.Add(order);
                 _context.SaveChanges();
-                List<Cookie> cookies = await _context.Cookie.Where(c => c.OutOfStock == false).ToListAsync();
+                List<CookieOrders.Models.Cookie> cookies = await _context.Cookie.Where(c => c.OutOfStock == false).ToListAsync();
 
                 CookieOrderViewModel cookieOrderVM = new CookieOrderViewModel
                 {
@@ -130,6 +131,7 @@ namespace CookieOrders.Controllers
             smtpClient.UseDefaultCredentials = false;
             smtpClient.Credentials = new System.Net.NetworkCredential(adminEmailAddress, adminEmailPassword);
             smtpClient.EnableSsl = true;
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             MailMessage mail = new MailMessage();
 
             //Setting From , To and CC
