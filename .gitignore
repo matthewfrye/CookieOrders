@@ -262,3 +262,4 @@ __pycache__/
 /CookieOrders/Controllers/SuperAdminController.cs
 /CookieOrders/Models/AdminViewModel.cs
 /CookieOrders/Views/SuperAdmin/Index.cshtml
+/CookieOrders/appsettings.json
